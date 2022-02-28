@@ -1,3 +1,8 @@
+<?php
+    session_start();
+    include '../controller/control.php';
+    $get_data = new Data();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,7 +16,7 @@
             integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
             crossorigin="anonymous"
         />
-        <link rel="stylesheet" href="/view/style/style.css">
+        <link rel="stylesheet" href="./style/style.css">
         <title>Facebook Login</title>
     </head>
     <body>
@@ -37,15 +42,15 @@
                         <h1 class="text-center">Facebook Login</h1>
                     </div>
                 </div>
-                <form action="/action_page.php">
+                <form method="post">
                     <div class="form-group">
                         <label for="email">Email:</label>
                         <input
-                            type="email"
+                            type="username"
                             class="form-control"
-                            id="email"
+                            id="username"
                             placeholder="Enter email"
-                            name="email"
+                            name="username"
                         />
                     </div>
                     <div class="form-group">
@@ -58,20 +63,32 @@
                             name="pswd"
                         />
                     </div>
-                    <!-- <div class="form-group">
-                        <label for="cpwd">Repeat Password:</label>
-                        <input
-                            type="password"
-                            class="form-control"
-                            id="cpwd"
-                            placeholder="Repeat password"
-                            name="cpswd"
-                        />
-                    </div> -->
-                    <button type="submit" class="btn btn-primary">
-                        Submit
+                    <button type="submit" name="login" class="btn btn-primary">
+                        Login 
+                    </button>
+                    <button type="submit" class="btn btn-info">
+                        <a href="./signin.php">Sign In</a>
                     </button>
                 </form>
+                <?php 
+                    if (isset($_POST['login'])) {
+                        if(empty($_POST['username']) || empty($_POST['pswd']))
+                        {
+                            echo "<p class='text-danger'>Please fill all the fields</p>";
+                        }
+                        else 
+                        {
+                            $login = $get_data->login($_POST['username'], $_POST['pswd']);
+                            if ($login == 1) {
+                                $_SESSION['username'] = $_POST['username'];
+                                header('location: about.php');
+                                // echo '<p class="text-white">Login success</p>';
+                            } else {
+                                echo '<p class="text-danger">Login fail</p>';
+                            }
+                        }
+                    }
+                ?>
             </div>
         </main>
         <footer>
