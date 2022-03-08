@@ -1,11 +1,8 @@
 <?php
     session_start();
-?>
-<?php
     if ($_SESSION['username'] == '') {
         header('location: login.php');
     } else {
-        // echo '<p class="text-white">Welcome '.$_SESSION['username'].'</p>';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,10 +43,10 @@
                             Blog
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Add Blog</a>
+                            <a class="dropdown-item" href="./blog.php">Add Blog</a>
                         </div>
                     </li>
-
+        <img src="" alt="">
                     <!-- Dropdown -->
                     <li class="nav-item dropdown">
                         <a
