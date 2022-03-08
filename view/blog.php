@@ -78,7 +78,7 @@
                         <div class="form-container">
                             <form id="form">
                                 <div class="form-group">
-                                    <label for="title">Title</label>
+                                    <label for="title">Date</label>
                                     <input
                                         type="date"
                                         class="form-control"
@@ -95,12 +95,21 @@
                                     />
                                 </div>
                                 <div class="form-group">
-                                    <label for="content">Content</label>
+                                    <label for="content">Short Content</label>
                                     <textarea
                                         class="form-control"
-                                        id="content"
+                                        id="scontent"
                                         rows="3"
-                                        placeholder="Content"
+                                        placeholder="Short Content"
+                                    ></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="content">Long Content</label>
+                                    <textarea
+                                        class="form-control"
+                                        id="lcontent"
+                                        rows="3"
+                                        placeholder="Long Content"
                                     ></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary">

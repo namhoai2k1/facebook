@@ -15,6 +15,13 @@
             $query = mysqli_query($conn, $sql);
             return $query;
         }
+
+        public function addblog($date, $title, $s_content, $l_conten) {
+            global $conn;
+            $sql = "INSERT INTO blog (date, title, short_content, long_content) VALUES ('$date', '$title', '$s_content', '$l_conten')";
+            $query = mysqli_query($conn, $sql);
+            return $query;
+        }
     }
 ?>
 
