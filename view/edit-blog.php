@@ -2,24 +2,19 @@
     include '../controller/control.php';
     $get_data = new Data();
     session_start();
-    // ==================== add blog ====================
-    if (isset($_POST['submit'])) {
-        if(empty($_POST['date']) || empty($_POST['title']) || empty($_POST['scontent']) || empty($_POST['lcontent'])) {
-            echo '<div class="alert alert-danger">
-                <strong>Error!</strong> Please fill all the fields.
-            </div>';
-        } else {
-            try {
-                $get_data->addblog($_POST['date'], $_POST['title'], $_POST['scontent'], $_POST['lcontent'], $_SESSION['username']);
-                echo '<div class="alert alert-success">
-                    <strong>Success!</strong> Blog added successfully.
-                </div>';                                           
-            } catch (Exception $e) {
-                echo '<p class="text-danger">add blog in fail</p>';
-            }
-        }
+
+    if(isset($_GET['id'])){
+        $id = $_GET['id'];
     }
-    // ===================== lay session =====================
+    // thay doi du lieu
+    if(isset($_POST['submit'])){
+        header('location: about.php');
+        $date = $_POST['date'];
+        $title = $_POST['title'];
+        $scontent = $_POST['scontent'];
+        $lcontent = $_POST['lcontent'];
+        $get_data->editblog($id, $date, $title, $scontent, $lcontent);
+    }   
     if ($_SESSION['username'] == '') {
         header('location: login.php');
     } else {
@@ -89,7 +84,7 @@
         </header>
         <main>
             <div class="blog__title">
-                <h1 class="text-center">Add Blog</h1>
+                <h1 class="text-center">Edit Blog</h1>
             </div>
             <div class="container">
                 <div class="row">
@@ -103,6 +98,7 @@
                                         class="form-control"
                                         id="date"
                                         name="date"
+                                        value="<?php echo $get_data->selecteditblog($id)["date"]; ?>"
                                     />
                                 </div>
                                 <div class="form-group">
@@ -113,6 +109,7 @@
                                         id="title"
                                         placeholder="Title"
                                         name="title"
+                                        value="<?php echo $get_data->selecteditblog($id)["title"]; ?>"
                                     />
                                 </div>
                                 <div class="form-group">
@@ -123,7 +120,8 @@
                                         rows="3"
                                         placeholder="Short Content"
                                         name="scontent"
-                                    ></textarea>
+                                    ><?php echo $get_data->selecteditblog($id)["S_content"]; ?></textarea>
+                                    </textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="content">Long Content</label>
@@ -133,7 +131,8 @@
                                         rows="3"
                                         placeholder="Long Content"
                                         name="lcontent"
-                                    ></textarea>
+                                    ><?php echo $get_data->selecteditblog($id)["L_content"]; ?></textarea>
+                                    </textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary" name="submit">
                                     Submit
@@ -153,8 +152,8 @@
                 </div>
             </div>
         </footer>
-<?php
-    }
-?>
+        <?php
+            }
+        ?>
     </body>
 </html>

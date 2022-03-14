@@ -1,5 +1,7 @@
 <?php
     session_start();
+    include('../controller/control.php'); 
+    $get_data = new Data();
     if ($_SESSION['username'] == '') {
         header('location: login.php');
     } else {
@@ -46,7 +48,6 @@
                             <a class="dropdown-item" href="./blog.php">Add Blog</a>
                         </div>
                     </li>
-        <img src="" alt="">
                     <!-- Dropdown -->
                     <li class="nav-item dropdown">
                         <a
@@ -65,7 +66,47 @@
                 </ul>
             </nav>
         </header>
-        <main></main>
+        <main>
+            <h3>All blog</h3>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Author</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                    $i = 1;
+                                    $query = $get_data->selectblog();
+                                    while ($row = mysqli_fetch_assoc($query)) {
+                                ?>
+                                <tr>
+                                    <th scope="row"><?php echo $i; ?></th>
+                                    <td><?php echo $row['title']; ?></td>
+                                    <td><?php echo $row['author']; ?></td>
+                                    <td><?php echo $row['date']; ?></td>
+                                    <td>
+                                        <a href="./edit-blog.php?id=<?php echo $row['id']; ?>">Edit</a>
+                                        <a href="./delete-blog.php?id=<?php echo $row['id']; ?>">Delete</a>
+                                    </td>
+                                </tr>
+                                <?php
+                                    $i++;
+                                    }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
         <footer>
             <div class="container-fluid footer">
                 <div class="row">
